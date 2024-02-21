@@ -560,6 +560,14 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
     false
     )
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    if (controller.A.isPressed()) {
+        info.changeScoreBy(1)
+        sprites.destroy(otherSprite)
+    } else {
+        otherSprite.setVelocity(100, 50)
+    }
+})
 let mySprite: Sprite = null
 let lilholt: Sprite = null
 scene.setBackgroundImage(img`
@@ -754,6 +762,7 @@ lilholt = sprites.create(img`
     `, SpriteKind.Player)
 lilholt.setPosition(20, 56)
 controller.moveSprite(lilholt, 0, 100)
+info.setScore(0)
 game.onUpdateInterval(500, function () {
     mySprite = sprites.create(img`
         ...........ccccc66666...........
